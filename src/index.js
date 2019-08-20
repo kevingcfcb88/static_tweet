@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import './index.css';
 
 function Tweet({tweet}){
@@ -22,6 +23,17 @@ function Tweet({tweet}){
     );
 }
 
+Tweet.propTypes = {
+    tweet: PropTypes.shape({
+        gravatar: PropTypes.string.isRequired,
+        author: PropTypes.object.isRequired,
+        timestamp: PropTypes.string.isRequired,
+        message: PropTypes.string.isRequired,
+        retweets: PropTypes.number,
+        likes: PropTypes.number
+    }).isRequired
+}
+
 function Avatar({hash}){
     var url = `https://www.gravatar.com/avatar/${hash}`
     return (
@@ -33,6 +45,10 @@ function Avatar({hash}){
     );
 }
 
+Avatar.propTypes = {
+    hash: PropTypes.string
+};
+
 function Message({text}){
     return (
         <div className="message">
@@ -40,6 +56,10 @@ function Message({text}){
         </div>
     );
 }
+
+Message.propTypes = {
+    text: PropTypes.string
+};
 
 function NameWithHandle({author}){
     const {name, handle} = author;
@@ -51,6 +71,13 @@ function NameWithHandle({author}){
     );
 }
 
+NameWithHandle.propTypes = {
+    author: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        handle: PropTypes.string.isRequired
+    }).isRequired
+};
+
 const Time = ({time}) => {
     const timeString = moment(time).fromNow();    
     return (
@@ -58,6 +85,10 @@ const Time = ({time}) => {
             {timeString}
         </span>
     );
+};
+
+Time.propTypes = {
+    time: PropTypes.string
 };
 
 const ReplyButton = () => (
@@ -71,6 +102,10 @@ const RetweetButton = ({count}) => (
     </span>
 );
 
+RetweetButton.propTypes = {
+    count: PropTypes.number
+};
+
 const LikeButton = ({count}) => (
     <span className="like-button">
         <i className="fa fa-heart"/>
@@ -80,6 +115,10 @@ const LikeButton = ({count}) => (
             </span>}
     </span>
 );
+
+LikeButton.propTypes = {
+    count: PropTypes.number
+};
 
 const MoreOptionsButton = () => (
     <i className="fa fa-ellipsis-h more-options-button"></i>
